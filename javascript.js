@@ -17,6 +17,10 @@ function Book(title, author, number, read) {
     this.read = read;
 }
 
+Book.prototype.toggleRead = function () {
+
+}
+
 function addBookToLibrary (obj) {
     myLibrary.push(obj);
     displaybook(obj);
@@ -46,11 +50,23 @@ function displaybook (obj) {
     } else {
         readButton.textContent = 'Not read';
     }
+    readButton.onclick = function (e) {
+        let x = e.target.parentElement.parentElement.dataset.number;
+        let obj = myLibrary[x];
+        if (obj.read === 'false') {
+            obj.read = 'true';
+            e.target.textContent = 'Read'
+        } else {
+            obj.read = 'false';
+            e.target.textContent = 'Not Read'
+        }
+        console.log(obj);
+    };
     deleteButton.textContent = 'Delete';
     deleteButton.onclick = function (e) {
         e.target.parentElement.parentElement.remove();
-        let x = e.target.parentElement.parentElement.dataset.number;
-        myLibrary.splice(x,1);
+        let y = e.target.parentElement.parentElement.dataset.number;
+        myLibrary.splice(y,1);
         let cards = document.querySelectorAll('.card');
         let arr = Array.from(cards);
         for (let card of cards) {
